@@ -11,7 +11,7 @@ const ItemContainer = styled.div`
 const Body = (props) => {
   const apodItems = props.apodData.map((apod) => (
     <li key={apod.date}>
-      <ApodItem apod={apod}>
+      <ApodItem apod={apod} showThumbnail={true}>
         {apod.title} - {apod.date}
       </ApodItem>
     </li>

@@ -44,35 +44,70 @@ const ContentContainer = styled.div`
   justify-content: space-evenly;
 `;
 
-const TitleContainer = styled.div`
+const TitleContainer = styled.a`
   font-size: 20px;
   color: blue;
   font-weight: bold;
+  text-decoration: none;
 `;
 
 const InfoContainer = styled.div`
   color: #919191;
 `;
 
+const CommentsSection = styled.a`
+  text-decoration: none;
+  color: #919191;
+`;
+
 const ApodItem = (props) => {
+  let thumbnail;
+  if (props.showThumbnail) {
+    thumbnail = <Thumbnail src={props.apod.url} alt={props.apod.title} />;
+  } else {
+    thumbnail = <div />;
+  }
   return (
     <ApodItemContainer>
       <UpvoteContainer>
         <Icon path={mdiTriangle} size={0.8} color="#b4b4b4" />
         <UpvoteCountContainer>0</UpvoteCountContainer>
       </UpvoteContainer>
-      <ThumbnailContainer>
-        <Thumbnail src={props.apod.url} alt={props.apod.title} />
-      </ThumbnailContainer>
+      <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
       <ContentContainer>
-        <TitleContainer>{props.apod.title}</TitleContainer>
+        <TitleContainer
+          href={`https://apod.nasa.gov/apod/${buildUrlSuffix(
+            props.apod.date
+          )}.html`}
+          target="blank"
+        >
+          {props.apod.title}
+        </TitleContainer>
         <InfoContainer>
-          {props.apod.date} | 0 comments{" "}
+          {props.apod.date} |
+          <CommentsSection
+            href={`post?post_id=${props.apod.date}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {" "}
+            0 comments{" "}
+          </CommentsSection>
           {props.apod.copyright ? `| ${props.apod.copyright}` : null}
         </InfoContainer>
       </ContentContainer>
     </ApodItemContainer>
   );
+};
+
+// Take an input date format of 2022-01-31 (yyyy-mm-dd) into apyymmdd
+const buildUrlSuffix = (isoDate) => {
+  let dateElements = isoDate.split("-");
+  let year = dateElements[0].substring(2);
+  let month = dateElements[1];
+  let day = dateElements[2];
+
+  return "ap" + year + month + day;
 };
 
 export default ApodItem;
