@@ -4,12 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Main from "./main/Main";
 import reportWebVitals from "./reportWebVitals";
-import NavBar from "./main/NavBar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <NavBar />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />} />

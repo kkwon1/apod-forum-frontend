@@ -2,15 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import ApodItem from "./ApodItem";
 
-const BodyContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 5px;
-  background-color: #3f3f3f;
-`;
-
-const ItemContainer = styled.ul`
+const ItemContainer = styled.div`
   list-style-type: none;
+  padding-top: 5px;
+  padding-bottom: 5px;
 `;
 
 const Body = (props) => {
