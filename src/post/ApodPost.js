@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Paper from "@mui/material/Paper";
 import ApodItem from "../body/ApodItem";
+import Divider from "@mui/material/Divider";
 
 const ApodViewContainer = styled.div`
   font-family: "Poppins", sans-serif;
   padding-top: 40px;
-  margin-left: 400px;
-  margin-right: 400px;
+  padding-left: 400px;
+  padding-right: 400px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-const InteractionContainer = styled(Paper)`
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-left: 50px;
-  padding-right: 50px;
-  width: 1200px;
-  margin: auto;
-`;
-
-const PostContainer = styled.div`
+const ImageSectionContainer = styled.div`
   display: flex;
   justify-content: center;
+  padding-top: 20px;
 `;
 
 const DescriptionContainer = styled.div`
@@ -35,19 +27,18 @@ const DescriptionContainer = styled.div`
   line-height: 1.5;
   color: #626262;
 
-  padding-bottom: 20px;
+  padding-bottom: 30px;
 `;
 
 const ImageContainer = styled.img`
-  display: flex;
-  justify-content: center;
-  width: 750px;
+  width: 100%;
 `;
 
 const CommentsContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding: 10px;
+  padding-top: 50px;
+  padding-bottom: 50px;
 `;
 
 const CommentText = styled.textarea`
@@ -69,13 +60,18 @@ const ApodPost = () => {
     return (
       <ApodViewContainer>
         <ApodItem apod={apodPost.nasaApod} />
+        <ImageSectionContainer>
+          <ImageContainer
+            src={apodPost.nasaApod.hdurl}
+            alt="Alt Text"
+          ></ImageContainer>
+        </ImageSectionContainer>
         <DescriptionContainer>
           {apodPost.nasaApod.description}
         </DescriptionContainer>
-        <ImageContainer
-          src={apodPost.nasaApod.hdurl}
-          alt="Alt Text"
-        ></ImageContainer>
+
+        <Divider variant="middle" />
+
         <CommentsContainer>
           <CommentText></CommentText>
           {JSON.stringify(apodPost.comments)}
