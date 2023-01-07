@@ -30,8 +30,11 @@ const DescriptionContainer = styled.div`
   padding-bottom: 30px;
 `;
 
+const ImageLinkContainer = styled.a`
+  height: 600px;
+`;
 const ImageContainer = styled.img`
-  width: 100%;
+  height: 600px;
 `;
 
 const CommentsContainer = styled.div`
@@ -49,22 +52,25 @@ const ApodPost = () => {
   const [apodPost, setApodPost] = useState(null);
   const search = useLocation().search;
   const postId = new URLSearchParams(search).get("post_id");
+  const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
 
   useEffect(() => {
-    fetch("http://localhost:8082/post?post_id=" + postId)
+    fetch(`${serverEndpointBase}/post?post_id=${postId}`)
       .then((response) => response.json())
       .then((data) => setApodPost(data));
-  }, [postId]);
+  }, [postId, serverEndpointBase]);
 
   if (apodPost) {
     return (
       <ApodViewContainer>
         <ApodItem apod={apodPost.nasaApod} />
         <ImageSectionContainer>
-          <ImageContainer
-            src={apodPost.nasaApod.hdurl}
-            alt="Alt Text"
-          ></ImageContainer>
+          <ImageLinkContainer href={apodPost.nasaApod.hdurl} target="blank">
+            <ImageContainer
+              src={apodPost.nasaApod.hdurl}
+              alt="Alt Text"
+            ></ImageContainer>
+          </ImageLinkContainer>
         </ImageSectionContainer>
         <DescriptionContainer>
           {apodPost.nasaApod.description}

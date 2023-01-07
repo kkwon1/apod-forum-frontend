@@ -13,14 +13,13 @@ const MainContainer = styled.div`
 
 const Main = () => {
   const [apodData, setApodData] = useState(null);
+  const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
 
   useEffect(() => {
-    fetch(
-      "http://localhost:8082/apod?start_date=2022-08-01&end_date=2022-08-30"
-    )
+    fetch(`${serverEndpointBase}/apod`)
       .then((response) => response.json())
       .then((apodData) => setApodData(apodData));
-  }, []);
+  }, [serverEndpointBase]);
 
   if (apodData) {
     return (
