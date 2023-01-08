@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import Header from "../main/Header";
 import ApodItem from "../body/ApodItem";
 import Divider from "@mui/material/Divider";
 
 const ApodViewContainer = styled.div`
   font-family: "Poppins", sans-serif;
-  padding-top: 40px;
   padding-left: 400px;
   padding-right: 400px;
 
@@ -63,6 +63,7 @@ const ApodPost = () => {
   if (apodPost) {
     return (
       <ApodViewContainer>
+        <Header />
         <ApodItem apod={apodPost.nasaApod} />
         <ImageSectionContainer>
           <ImageLinkContainer href={apodPost.nasaApod.hdurl} target="blank">

@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Typography from "@mui/material/Typography";
 
@@ -28,10 +29,15 @@ const LoginContainer = styled.div`
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
       <NavigationContainer>
-        <MainContainer>APOD Forum</MainContainer>
+        <MainContainer onClick={() => navigate('/')}>
+          <div style={{ cursor: "pointer" }}>
+            APOD Forum
+          </div>
+        </MainContainer>
         Popular | Comments | Search | Random
       </NavigationContainer>
       <LoginContainer>Login</LoginContainer>
