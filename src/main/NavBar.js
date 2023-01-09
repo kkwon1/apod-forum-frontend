@@ -20,7 +20,7 @@ const NavBar = () => {
   return (
     <AppBar position="static" style={{ background: "#ffffff" }}>
       <Toolbar>
-        <TypographyContainer variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <TypographyContainer variant="h6" component="span" sx={{ flexGrow: 1 }}>
           APOD Forum
         </TypographyContainer>
         <LoginContainer>Login</LoginContainer>

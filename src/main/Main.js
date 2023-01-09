@@ -18,6 +18,9 @@ const Main = () => {
   useEffect(() => {
     fetch(`${serverEndpointBase}/apod`)
       .then((response) => response.json())
+      .then((apodData) =>
+        apodData.sort((a, b) => a.date.localeCompare(b.bdate))
+      )
       .then((apodData) => setApodData(apodData));
   }, [serverEndpointBase]);
 
