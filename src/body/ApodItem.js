@@ -91,7 +91,7 @@ const ApodItem = (props) => {
             rel="noreferrer"
           >
             {" "}
-            0 comments{" "}
+            {props.apod.commentCount} comments{" "}
           </CommentsSection>
           {props.apod.copyright ? `| ${props.apod.copyright}` : null}
         </InfoContainer>

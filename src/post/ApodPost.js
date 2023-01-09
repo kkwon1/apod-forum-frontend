@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Header from "../main/Header";
 import ApodItem from "../body/ApodItem";
 import Divider from "@mui/material/Divider";
+import CommentThread from "./CommentThread";
 
 const ApodViewContainer = styled.div`
   font-family: "Poppins", sans-serif;
@@ -40,12 +41,13 @@ const ImageContainer = styled.img`
 const CommentsContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   padding-top: 50px;
   padding-bottom: 50px;
 `;
 
 const CommentText = styled.textarea`
-  width: 1200px;
+  width: 800px;
 `;
 
 const ApodPost = () => {
@@ -82,6 +84,7 @@ const ApodPost = () => {
         <CommentsContainer>
           <CommentText></CommentText>
           {JSON.stringify(apodPost.comments)}
+          <CommentThread comments={apodPost.comments} />
         </CommentsContainer>
       </ApodViewContainer>
     );
