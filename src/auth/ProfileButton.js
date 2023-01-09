@@ -1,11 +1,20 @@
 import React from "react";
 
-const ProfileButton = () => {
+const ProfileButton = (props) => {
   const profileStyle = {
     cursor: "pointer",
-    "margin-right": "20px",
+    marginRight: "20px",
   };
-  return <div style={profileStyle}>Profile</div>;
+  return (
+    <div
+      onClick={() => {
+        console.log(props.user);
+      }}
+      style={profileStyle}
+    >
+      Profile
+    </div>
+  );
 };
 
 export default ProfileButton;

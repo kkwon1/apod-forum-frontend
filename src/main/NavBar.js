@@ -23,7 +23,7 @@ const NavBar = () => {
         <TypographyContainer variant="h6" component="span" sx={{ flexGrow: 1 }}>
           APOD Forum
         </TypographyContainer>
-        <LoginContainer>Login</LoginContainer>
+        <LoginContainer component="span">Login</LoginContainer>
       </Toolbar>
     </AppBar>
   );

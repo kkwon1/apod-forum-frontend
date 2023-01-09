@@ -34,11 +34,11 @@ const AuthContainer = styled.div`
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   if (!isLoading) {
     return (
-      <HeaderContainer>
+      <HeaderContainer component="span">
         <NavigationContainer>
           <MainContainer onClick={() => navigate("/")}>
             <div style={{ cursor: "pointer" }}>APOD Forum</div>
@@ -47,7 +47,7 @@ const Header = () => {
         </NavigationContainer>
         {isAuthenticated ? (
           <AuthContainer>
-            <ProfileButton />
+            <ProfileButton user={user} />
             <LogoutButton />
           </AuthContainer>
         ) : (
