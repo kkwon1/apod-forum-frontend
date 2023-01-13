@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import styled from "styled-components";
 import Body from "../body/Body";
 import Header from "./Header";
+import { useMediaQuery } from "react-responsive";
+import MobileHeader from "../mobile/MobileHeader";
+import MobileBody from "../mobile/MobileBody";
 
 const MainContainer = styled.div`
   display: flex;
@@ -15,6 +18,11 @@ const Main = () => {
   const [apodData, setApodData] = useState(null);
   const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
 
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1224px)",
+  });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
   useEffect(() => {
     fetch(`${serverEndpointBase}/apod`)
       .then((response) => response.json())
@@ -26,10 +34,20 @@ const Main = () => {
 
   if (apodData) {
     return (
-      <MainContainer>
-        <Header />
-        <Body apodData={apodData} />
-      </MainContainer>
+      <Fragment>
+        {isDesktopOrLaptop && (
+          <MainContainer>
+            <Header />
+            <Body apodData={apodData} />
+          </MainContainer>
+        )}
+        {isTabletOrMobile && (
+          <Fragment>
+            <MobileHeader />
+            <MobileBody apodData={apodData} />
+          </Fragment>
+        )}
+      </Fragment>
     );
   } else {
     return <div>loading...</div>;

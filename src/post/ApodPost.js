@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../main/Header";
 import ApodItem from "../body/ApodItem";
 import Divider from "@mui/material/Divider";
 import CommentThread from "./CommentThread";
+import { useMediaQuery } from "react-responsive";
+import MobileHeader from "../mobile/MobileHeader";
+import MobileApodItem from "../mobile/MobileApodItem";
 
 const ApodViewContainer = styled.div`
   font-family: "Poppins", sans-serif;
@@ -50,11 +53,32 @@ const CommentText = styled.textarea`
   width: 800px;
 `;
 
+const MobileApodViewContainer = styled.div`
+  font-family: "Poppins", sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const MobileDescriptionContainer = styled.div`
+  font-size: 14px;
+  line-height: 1.5;
+  color: #626262;
+  text-align: left;
+  padding: 15px;
+`;
+
 const ApodPost = () => {
   const [apodPost, setApodPost] = useState(null);
   const search = useLocation().search;
   const postId = new URLSearchParams(search).get("post_id");
   const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 1224px)",
+  });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   useEffect(() => {
     fetch(`${serverEndpointBase}/post?post_id=${postId}`)
@@ -64,29 +88,50 @@ const ApodPost = () => {
 
   if (apodPost) {
     return (
-      <ApodViewContainer>
-        <Header />
-        <ApodItem apod={apodPost.nasaApod} />
-        <ImageSectionContainer>
-          <ImageLinkContainer href={apodPost.nasaApod.hdurl} target="blank">
-            <ImageContainer
-              src={apodPost.nasaApod.hdurl}
-              alt="Alt Text"
-            ></ImageContainer>
-          </ImageLinkContainer>
-        </ImageSectionContainer>
-        <DescriptionContainer>
-          {apodPost.nasaApod.description}
-        </DescriptionContainer>
+      <Fragment>
+        {isDesktopOrLaptop && (
+          <ApodViewContainer>
+            <Header />
+            <ApodItem apod={apodPost.nasaApod} />
+            <ImageSectionContainer>
+              <ImageLinkContainer href={apodPost.nasaApod.hdurl} target="blank">
+                <ImageContainer
+                  src={apodPost.nasaApod.hdurl}
+                  alt="Alt Text"
+                ></ImageContainer>
+              </ImageLinkContainer>
+            </ImageSectionContainer>
+            <DescriptionContainer>
+              {apodPost.nasaApod.description}
+            </DescriptionContainer>
 
-        <Divider variant="middle" />
+            <Divider variant="middle" />
 
-        <CommentsContainer>
-          <CommentText></CommentText>
-          {JSON.stringify(apodPost.comments)}
-          <CommentThread comments={apodPost.comments} />
-        </CommentsContainer>
-      </ApodViewContainer>
+            <CommentsContainer>
+              <CommentText></CommentText>
+              {JSON.stringify(apodPost.comments)}
+              <CommentThread comments={apodPost.comments} />
+            </CommentsContainer>
+          </ApodViewContainer>
+        )}
+        {isTabletOrMobile && (
+          <MobileApodViewContainer>
+            <MobileHeader />
+            <MobileApodItem apod={apodPost.nasaApod} />
+            <ImageSectionContainer>
+              <ImageLinkContainer href={apodPost.nasaApod.hdurl} target="blank">
+                <ImageContainer
+                  src={apodPost.nasaApod.hdurl}
+                  alt="Alt Text"
+                ></ImageContainer>
+              </ImageLinkContainer>
+            </ImageSectionContainer>
+            <MobileDescriptionContainer>
+              {apodPost.nasaApod.description}
+            </MobileDescriptionContainer>
+          </MobileApodViewContainer>
+        )}
+      </Fragment>
     );
   } else {
     return <div>Retrieving...</div>;
