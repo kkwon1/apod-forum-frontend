@@ -102,7 +102,7 @@ const ApodPost = () => {
               </ImageLinkContainer>
             </ImageSectionContainer>
             <DescriptionContainer>
-              {apodPost.nasaApod.description}
+              {apodPost.nasaApod.explanation}
             </DescriptionContainer>
 
             <Divider variant="middle" />
@@ -127,7 +127,7 @@ const ApodPost = () => {
               </ImageLinkContainer>
             </ImageSectionContainer>
             <MobileDescriptionContainer>
-              {apodPost.nasaApod.description}
+              {apodPost.nasaApod.explanation}
             </MobileDescriptionContainer>
           </MobileApodViewContainer>
         )}
