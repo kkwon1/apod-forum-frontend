@@ -4,8 +4,6 @@ import styled from "styled-components";
 import Body from "../body/Body";
 import Header from "./Header";
 import { useMediaQuery } from "react-responsive";
-import MobileHeader from "../mobile/MobileHeader";
-import MobileBody from "../mobile/MobileBody";
 import Paginator from "./Paginator";
 
 const MainContainer = styled.div`
@@ -29,10 +27,8 @@ const Main = () => {
   const [isLoading, setIsLoading] = useState(true);
   const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
 
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 1224px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   useEffect(() => {
     setIsLoading(true);
@@ -50,17 +46,18 @@ const Main = () => {
   } else {
     return (
       <Fragment>
-        {isDesktopOrLaptop && (
+        {isDesktop && (
           <MainContainer>
             <Header />
             <Body apodData={apodData} />
             <Paginator page={page} />
           </MainContainer>
         )}
-        {isTabletOrMobile && (
+        {isMobile && (
           <Fragment>
-            <MobileHeader />
-            <MobileBody apodData={apodData} />
+            <Header />
+            <Body apodData={apodData} />
+            <Paginator page={page} />
           </Fragment>
         )}
       </Fragment>

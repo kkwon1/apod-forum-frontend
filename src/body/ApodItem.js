@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import Icon from "@mdi/react";
 import { mdiTriangle } from "@mdi/js";
+import { useMediaQuery } from "react-responsive";
 
 const ApodItemContainer = styled.div`
   font-family: "Poppins", sans-serif;
@@ -60,6 +61,20 @@ const CommentsSection = styled.a`
   color: #919191;
 `;
 
+const MobileTitleContainer = styled.a`
+  font-size: 16px;
+  color: blue;
+  font-weight: bold;
+  text-decoration: none;
+  padding-right: 5px;
+`;
+
+const MobileInfoContainer = styled.div`
+  color: #919191;
+  font-size: 14px;
+  padding-right: 5px;
+`;
+
 const ApodItem = (props) => {
   let thumbnail;
   if (props.showThumbnail) {
@@ -67,38 +82,79 @@ const ApodItem = (props) => {
   } else {
     thumbnail = <div />;
   }
+
+  const isDesktop = useMediaQuery({ query: "(min-width: 1224px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
   return (
-    <ApodItemContainer>
-      <UpvoteContainer>
-        <Icon path={mdiTriangle} size={0.8} color="#b4b4b4" />
-        <UpvoteCountContainer>0</UpvoteCountContainer>
-      </UpvoteContainer>
-      <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
-      <ContentContainer>
-        <TitleContainer
-          href={`https://apod.nasa.gov/apod/${buildUrlSuffix(
-            props.apod.date
-          )}.html`}
-          target="blank"
-        >
-          {props.apod.title}
-        </TitleContainer>
-        <InfoContainer>
-          {props.apod.date} |
-          <CommentsSection
-            href={`${window.location.origin.toString()}/post?post_id=${
-              props.apod.date
-            }`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {" "}
-            {props.apod.commentCount} comments{" "}
-          </CommentsSection>
-          {props.apod.copyright ? `| ${props.apod.copyright}` : null}
-        </InfoContainer>
-      </ContentContainer>
-    </ApodItemContainer>
+    <Fragment>
+      {isDesktop && (
+        <ApodItemContainer>
+          <UpvoteContainer>
+            <Icon path={mdiTriangle} size={0.8} color="#b4b4b4" />
+            <UpvoteCountContainer>0</UpvoteCountContainer>
+          </UpvoteContainer>
+          <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
+          <ContentContainer>
+            <TitleContainer
+              href={`https://apod.nasa.gov/apod/${buildUrlSuffix(
+                props.apod.date
+              )}.html`}
+              target="blank"
+            >
+              {props.apod.title}
+            </TitleContainer>
+            <InfoContainer>
+              {props.apod.date} |
+              <CommentsSection
+                href={`${window.location.origin.toString()}/post?post_id=${
+                  props.apod.date
+                }`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {" "}
+                {props.apod.commentCount} comments{" "}
+              </CommentsSection>
+              {props.apod.copyright ? `| ${props.apod.copyright}` : null}
+            </InfoContainer>
+          </ContentContainer>
+        </ApodItemContainer>
+      )}
+      {isMobile && (
+        <ApodItemContainer>
+          <UpvoteContainer>
+            <Icon path={mdiTriangle} size={0.8} color="#b4b4b4" />
+            <UpvoteCountContainer>0</UpvoteCountContainer>
+          </UpvoteContainer>
+          <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
+          <ContentContainer>
+            <MobileTitleContainer
+              href={`https://apod.nasa.gov/apod/${buildUrlSuffix(
+                props.apod.date
+              )}.html`}
+              target="blank"
+            >
+              {props.apod.title}
+            </MobileTitleContainer>
+            <MobileInfoContainer>
+              {props.apod.date} |
+              <CommentsSection
+                href={`${window.location.origin.toString()}/post?post_id=${
+                  props.apod.date
+                }`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {" "}
+                {props.apod.commentCount} comments{" "}
+              </CommentsSection>
+              {props.apod.copyright ? `| ${props.apod.copyright}` : null}
+            </MobileInfoContainer>
+          </ContentContainer>
+        </ApodItemContainer>
+      )}
+    </Fragment>
   );
 };
 

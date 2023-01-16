@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const PaginatorContainer = styled.div`
   display: flex;
+  padding-left: 50px;
   padding-top: 30px;
   padding-bottom: 30px;
   font-family: "Poppins", sans-serif;

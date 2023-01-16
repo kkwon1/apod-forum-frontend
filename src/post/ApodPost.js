@@ -6,8 +6,6 @@ import ApodItem from "../body/ApodItem";
 import Divider from "@mui/material/Divider";
 import CommentThread from "./CommentThread";
 import { useMediaQuery } from "react-responsive";
-import MobileHeader from "../mobile/MobileHeader";
-import MobileApodItem from "../mobile/MobileApodItem";
 
 const ApodViewContainer = styled.div`
   font-family: "Poppins", sans-serif;
@@ -75,10 +73,8 @@ const ApodPost = () => {
   const postId = new URLSearchParams(search).get("post_id");
   const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
 
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 1224px)",
-  });
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 1224px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   useEffect(() => {
     fetch(`${serverEndpointBase}/post?post_id=${postId}`)
@@ -89,7 +85,7 @@ const ApodPost = () => {
   if (apodPost) {
     return (
       <Fragment>
-        {isDesktopOrLaptop && (
+        {isDesktop && (
           <ApodViewContainer>
             <Header />
             <ApodItem apod={apodPost.nasaApod} />
@@ -114,10 +110,10 @@ const ApodPost = () => {
             </CommentsContainer>
           </ApodViewContainer>
         )}
-        {isTabletOrMobile && (
+        {isMobile && (
           <MobileApodViewContainer>
-            <MobileHeader />
-            <MobileApodItem apod={apodPost.nasaApod} />
+            <Header />
+            <ApodItem apod={apodPost.nasaApod} />
             <ImageSectionContainer>
               <ImageLinkContainer href={apodPost.nasaApod.hdurl} target="blank">
                 <ImageContainer
