@@ -86,7 +86,9 @@ const ApodItem = (props) => {
         <InfoContainer>
           {props.apod.date} |
           <CommentsSection
-            href={`post?post_id=${props.apod.date}`}
+            href={`${window.location.origin.toString()}/post?post_id=${
+              props.apod.date
+            }`}
             target="_blank"
             rel="noreferrer"
           >

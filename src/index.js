@@ -18,6 +18,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/page/:page" element={<Main />} />
           <Route path="post" element={<ApodPost />} />
         </Routes>
       </BrowserRouter>

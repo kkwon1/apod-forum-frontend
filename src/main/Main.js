@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Body from "../body/Body";
 import Header from "./Header";
 import { useMediaQuery } from "react-responsive";
 import MobileHeader from "../mobile/MobileHeader";
 import MobileBody from "../mobile/MobileBody";
+import Paginator from "./Paginator";
 
 const MainContainer = styled.div`
   display: flex;
@@ -15,7 +17,16 @@ const MainContainer = styled.div`
 `;
 
 const Main = () => {
+  let { page } = useParams();
+  if (page === undefined) {
+    page = 1;
+  }
+
+  const DEFAULT_LIMIT = 30;
+  let offset = (page - 1) * DEFAULT_LIMIT;
+
   const [apodData, setApodData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
 
   const isDesktopOrLaptop = useMediaQuery({
@@ -24,21 +35,26 @@ const Main = () => {
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   useEffect(() => {
-    fetch(`${serverEndpointBase}/apod`)
+    setIsLoading(true);
+    fetch(`${serverEndpointBase}/apod?offset=${offset}&limit=${DEFAULT_LIMIT}`)
       .then((response) => response.json())
       .then((apodData) =>
         apodData.sort((a, b) => a.date.localeCompare(b.bdate))
       )
-      .then((apodData) => setApodData(apodData));
-  }, [serverEndpointBase]);
+      .then((apodData) => setApodData(apodData))
+      .then(() => setIsLoading(false));
+  }, [serverEndpointBase, offset]);
 
-  if (apodData) {
+  if (isLoading) {
+    return <div>Loading...</div>;
+  } else {
     return (
       <Fragment>
         {isDesktopOrLaptop && (
           <MainContainer>
             <Header />
             <Body apodData={apodData} />
+            <Paginator page={page} />
           </MainContainer>
         )}
         {isTabletOrMobile && (
@@ -49,8 +65,6 @@ const Main = () => {
         )}
       </Fragment>
     );
-  } else {
-    return <div>loading...</div>;
   }
 };
 
