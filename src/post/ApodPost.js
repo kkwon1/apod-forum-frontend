@@ -6,6 +6,8 @@ import ApodItem from "../body/ApodItem";
 import Divider from "@mui/material/Divider";
 import CommentThread from "./CommentThread";
 import { useMediaQuery } from "react-responsive";
+import { useAuth0 } from "@auth0/auth0-react";
+import AddComment from "./AddComment";
 
 const ApodViewContainer = styled.div`
   font-family: "Poppins", sans-serif;
@@ -39,18 +41,6 @@ const ImageContainer = styled.img`
   height: 600px;
 `;
 
-const CommentsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding-top: 50px;
-  padding-bottom: 50px;
-`;
-
-const CommentText = styled.textarea`
-  width: 800px;
-`;
-
 const MobileApodViewContainer = styled.div`
   font-family: "Poppins", sans-serif;
 
@@ -68,7 +58,11 @@ const MobileDescriptionContainer = styled.div`
 `;
 
 const ApodPost = () => {
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
   const [apodPost, setApodPost] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+
   const search = useLocation().search;
   const postId = new URLSearchParams(search).get("post_id");
   const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
@@ -80,7 +74,8 @@ const ApodPost = () => {
     fetch(`${serverEndpointBase}/post?post_id=${postId}`)
       .then((response) => response.json())
       .then((data) => setApodPost(data));
-  }, [postId, serverEndpointBase]);
+    getAccessTokenSilently().then((accessToken) => setAccessToken(accessToken));
+  }, [postId, serverEndpointBase, getAccessTokenSilently]);
 
   if (apodPost) {
     return (
@@ -100,14 +95,14 @@ const ApodPost = () => {
             <DescriptionContainer>
               {apodPost.nasaApod.explanation}
             </DescriptionContainer>
-
             <Divider variant="middle" />
-
-            <CommentsContainer>
-              <CommentText></CommentText>
-              {JSON.stringify(apodPost.comments)}
-              <CommentThread comments={apodPost.comments} />
-            </CommentsContainer>
+            <AddComment
+              isAuthenticated={isAuthenticated}
+              comments={apodPost.comments}
+              accessToken={accessToken}
+              user={user}
+              date={postId}
+            />
           </ApodViewContainer>
         )}
         {isMobile && (

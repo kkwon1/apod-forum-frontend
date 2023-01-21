@@ -58,7 +58,7 @@ const Header = () => {
               </MainContainer>
               Popular | Comments | Search | Random
             </NavigationContainer>
-            {isAuthenticated ? (
+            {isAuthenticated && !isLoading ? (
               <AuthContainer>
                 <ProfileButton user={user} />
                 <LogoutButton />
