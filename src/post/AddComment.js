@@ -66,7 +66,7 @@ const addComment = (props) => {
     }),
   };
 
-  fetch(serverEndpointBase + "/comments", requestOptions).then((commentId) =>
+  fetch(serverEndpointBase + "/comment/add", requestOptions).then((commentId) =>
     console.log(commentId)
   );
 };
