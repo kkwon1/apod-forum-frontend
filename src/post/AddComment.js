@@ -63,6 +63,7 @@ const addComment = (props) => {
       parentCommentId: props.date,
       comment: comment,
       author: props.user.nickname,
+      postId: props.date,
     }),
   };
 
