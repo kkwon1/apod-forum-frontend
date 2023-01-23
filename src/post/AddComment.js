@@ -23,15 +23,40 @@ const AddCommentButton = styled.button`
 `;
 
 const AddComment = (props) => {
+  const [comments, setComments] = useState(props.comments.children);
+
+  const addComment = () => {
+    const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
+    let commentText = document.getElementById("commentText").value;
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + props.accessToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        parentCommentId: props.date,
+        comment: commentText,
+        author: props.user.nickname,
+        postId: props.date,
+      }),
+    };
+
+    fetch(serverEndpointBase + "/comment/add", requestOptions)
+      .then((response) => response.json())
+      .then((comment) => {
+        setComments([...comments, comment]);
+      });
+  };
+
   return (
     <Fragment>
       {props.isAuthenticated ? (
         <CommentsContainer>
           <CommentText id="commentText"></CommentText>
-          <AddCommentButton onClick={() => addComment(props)}>
-            Add Comment
-          </AddCommentButton>
-          {JSON.stringify(props.comments)}
+          <AddCommentButton onClick={addComment}>Add Comment</AddCommentButton>
+          {JSON.stringify(comments)}
         </CommentsContainer>
       ) : (
         <CommentsContainer>
@@ -42,33 +67,10 @@ const AddComment = (props) => {
             disabled
             placeholder="You must be logged in to leave a comment."
           ></CommentText>
-          {JSON.stringify(props.comments)}
+          {JSON.stringify(comments)}
         </CommentsContainer>
       )}
     </Fragment>
-  );
-};
-
-const addComment = (props) => {
-  const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
-  let comment = document.getElementById("commentText").value;
-
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + props.accessToken,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      parentCommentId: props.date,
-      comment: comment,
-      author: props.user.nickname,
-      postId: props.date,
-    }),
-  };
-
-  fetch(serverEndpointBase + "/comment/add", requestOptions).then((commentId) =>
-    console.log(commentId)
   );
 };
 

@@ -1,26 +1,12 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
-import Icon from "@mdi/react";
-import { mdiTriangle } from "@mdi/js";
 import { useMediaQuery } from "react-responsive";
+import Upvote from "./Upvote";
 
 const ApodItemContainer = styled.div`
   font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: row;
-`;
-
-const UpvoteContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 10px;
-`;
-
-const UpvoteCountContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  color: #b4b4b4;
 `;
 
 const ThumbnailContainer = styled.div`
@@ -90,10 +76,7 @@ const ApodItem = (props) => {
     <Fragment>
       {isDesktop && (
         <ApodItemContainer>
-          <UpvoteContainer>
-            <Icon path={mdiTriangle} size={0.8} color="#b4b4b4" />
-            <UpvoteCountContainer>0</UpvoteCountContainer>
-          </UpvoteContainer>
+          <Upvote />
           <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
           <ContentContainer>
             <TitleContainer
@@ -123,10 +106,7 @@ const ApodItem = (props) => {
       )}
       {isMobile && (
         <ApodItemContainer>
-          <UpvoteContainer>
-            <Icon path={mdiTriangle} size={0.8} color="#b4b4b4" />
-            <UpvoteCountContainer>0</UpvoteCountContainer>
-          </UpvoteContainer>
+          <Upvote />
           <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
           <ContentContainer>
             <MobileTitleContainer
