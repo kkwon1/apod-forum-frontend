@@ -7,7 +7,7 @@ const LogoutButton = () => {
   return (
     <div
       style={{ cursor: "pointer" }}
-      onClick={() => logout({ returnTo: window.location.origin })}
+      onClick={() => logout({ returnTo: window.location.href })}
     >
       Logout
     </div>

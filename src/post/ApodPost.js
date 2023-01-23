@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Header from "../main/Header";
 import ApodItem from "../body/ApodItem";
 import Divider from "@mui/material/Divider";
-import CommentThread from "./CommentThread";
 import { useMediaQuery } from "react-responsive";
 import { useAuth0 } from "@auth0/auth0-react";
 import AddComment from "./AddComment";
@@ -69,6 +68,8 @@ const ApodPost = () => {
 
   const isDesktop = useMediaQuery({ query: "(min-width: 1224px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+
+  localStorage.setItem("postId", postId);
 
   useEffect(() => {
     fetch(`${serverEndpointBase}/post?post_id=${postId}`)

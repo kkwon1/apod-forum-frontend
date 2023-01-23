@@ -30,6 +30,8 @@ const Main = () => {
   const isDesktop = useMediaQuery({ query: "(min-width: 1224px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
+  localStorage.setItem("postId", null);
+
   useEffect(() => {
     setIsLoading(true);
     fetch(`${serverEndpointBase}/apod?offset=${offset}&limit=${DEFAULT_LIMIT}`)

@@ -6,13 +6,13 @@ import Main from "./main/Main";
 import ApodPost from "./post/ApodPost";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "@auth0/auth0-react";
+import CallbackRoute from "./callback/CallbackRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Auth0Provider
     domain={process.env.REACT_APP_AUTH_DOMAIN}
     clientId={process.env.REACT_APP_CLIENT_ID}
-    redirectUri={window.location.href}
     audience={process.env.REACT_APP_AUTH_AUDIENCE}
   >
     <React.StrictMode>
@@ -21,6 +21,7 @@ root.render(
           <Route path="/" element={<Main />} />
           <Route path="/page/:page" element={<Main />} />
           <Route path="post" element={<ApodPost />} />
+          <Route path="/callback" element={<CallbackRoute />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
