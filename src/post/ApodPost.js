@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import { useMediaQuery } from "react-responsive";
 import { useAuth0 } from "@auth0/auth0-react";
 import AddComment from "./AddComment";
+import ImageSection from "./Image";
 
 const ApodViewContainer = styled.div`
   font-family: "Poppins", sans-serif;
@@ -18,12 +19,6 @@ const ApodViewContainer = styled.div`
   justify-content: center;
 `;
 
-const ImageSectionContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 20px;
-`;
-
 const DescriptionContainer = styled.div`
   padding-top: 20px;
   font-size: 16px;
@@ -31,13 +26,6 @@ const DescriptionContainer = styled.div`
   color: #626262;
 
   padding-bottom: 30px;
-`;
-
-const ImageLinkContainer = styled.a`
-  height: 600px;
-`;
-const ImageContainer = styled.img`
-  height: 600px;
 `;
 
 const MobileApodViewContainer = styled.div`
@@ -85,14 +73,7 @@ const ApodPost = () => {
           <ApodViewContainer>
             <Header />
             <ApodItem apod={apodPost.nasaApod} />
-            <ImageSectionContainer>
-              <ImageLinkContainer href={apodPost.nasaApod.hdurl} target="blank">
-                <ImageContainer
-                  src={apodPost.nasaApod.hdurl}
-                  alt="Alt Text"
-                ></ImageContainer>
-              </ImageLinkContainer>
-            </ImageSectionContainer>
+            <ImageSection hdurl={apodPost.nasaApod.hdurl} />
             <DescriptionContainer>
               {apodPost.nasaApod.explanation}
             </DescriptionContainer>
@@ -110,14 +91,7 @@ const ApodPost = () => {
           <MobileApodViewContainer>
             <Header />
             <ApodItem apod={apodPost.nasaApod} />
-            <ImageSectionContainer>
-              <ImageLinkContainer href={apodPost.nasaApod.hdurl} target="blank">
-                <ImageContainer
-                  src={apodPost.nasaApod.hdurl}
-                  alt="Alt Text"
-                ></ImageContainer>
-              </ImageLinkContainer>
-            </ImageSectionContainer>
+            <ImageSection hdurl={apodPost.nasaApod.hdurl} />
             <MobileDescriptionContainer>
               {apodPost.nasaApod.explanation}
             </MobileDescriptionContainer>

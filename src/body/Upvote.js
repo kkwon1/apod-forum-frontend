@@ -20,7 +20,7 @@ const UpvoteCountContainer = styled.div`
 const UpvoteIcon = styled(Icon)`
   color: #b4b4b4;
   &:hover {
-    color: #b00303;
+    color: #c30e0e;
     cursor: pointer;
   }
 `;
