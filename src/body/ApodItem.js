@@ -80,9 +80,9 @@ const ApodItem = (props) => {
           <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
           <ContentContainer>
             <TitleContainer
-              href={`https://apod.nasa.gov/apod/${buildUrlSuffix(
+              href={`${window.location.origin.toString()}/post?post_id=${
                 props.apod.date
-              )}.html`}
+              }`}
               target="blank"
             >
               {props.apod.title}
@@ -110,9 +110,9 @@ const ApodItem = (props) => {
           <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
           <ContentContainer>
             <MobileTitleContainer
-              href={`https://apod.nasa.gov/apod/${buildUrlSuffix(
+              href={`${window.location.origin.toString()}/post?post_id=${
                 props.apod.date
-              )}.html`}
+              }`}
               target="blank"
             >
               {props.apod.title}
