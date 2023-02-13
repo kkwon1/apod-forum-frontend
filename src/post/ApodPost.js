@@ -45,7 +45,8 @@ const MobileDescriptionContainer = styled.div`
 `;
 
 const ApodPost = () => {
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
 
   const [apodPost, setApodPost] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
@@ -67,11 +68,18 @@ const ApodPost = () => {
   }, [postId, serverEndpointBase, getAccessTokenSilently]);
 
   if (apodPost) {
+    console.log(user);
+    console.log(isAuthenticated);
+    console.log(accessToken);
     return (
       <Fragment>
         {isDesktop && (
           <ApodViewContainer>
-            <Header />
+            <Header
+              user={user}
+              accessToken={accessToken}
+              isLoading={isLoading}
+            />
             <ApodItem apod={apodPost.nasaApod} />
             <ImageSection hdurl={apodPost.nasaApod.hdurl} />
             <DescriptionContainer>
@@ -89,7 +97,11 @@ const ApodPost = () => {
         )}
         {isMobile && (
           <MobileApodViewContainer>
-            <Header />
+            <Header
+              user={user}
+              accessToken={accessToken}
+              isLoading={isLoading}
+            />
             <ApodItem apod={apodPost.nasaApod} />
             <ImageSection hdurl={apodPost.nasaApod.hdurl} />
             <MobileDescriptionContainer>
