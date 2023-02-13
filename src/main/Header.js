@@ -6,7 +6,6 @@ import LoginButton from "../auth/LoginButton";
 import LogoutButton from "../auth/LogoutButton";
 import ProfileButton from "../auth/ProfileButton";
 import { useMediaQuery } from "react-responsive";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const HeaderContainer = styled(Typography)`
   display: flex;
@@ -40,14 +39,13 @@ const MobileHeaderContainer = styled(Typography)`
   font-family: "Poppins", sans-serif;
 `;
 
-const Header = () => {
+const Header = (props) => {
   const navigate = useNavigate();
-  const { user, isAuthenticated, isLoading } = useAuth0();
 
   const isDesktop = useMediaQuery({ query: "(min-width: 1224px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
-  if (!isLoading) {
+  if (!props.isLoading) {
     return (
       <Fragment>
         {isDesktop && (
@@ -58,9 +56,9 @@ const Header = () => {
               </MainContainer>
               Popular | Comments | Search | Random
             </NavigationContainer>
-            {isAuthenticated ? (
+            {props.accessToken != null ? (
               <AuthContainer>
-                <ProfileButton user={user} />
+                <ProfileButton user={props.user} />
                 <LogoutButton />
               </AuthContainer>
             ) : (
@@ -75,9 +73,9 @@ const Header = () => {
                 <div style={{ cursor: "pointer" }}>APOD Forum</div>
               </MainContainer>
             </NavigationContainer>
-            {isAuthenticated ? (
+            {props.accessToken != null ? (
               <AuthContainer>
-                <ProfileButton user={user} />
+                <ProfileButton user={props.user} />
                 <LogoutButton />
               </AuthContainer>
             ) : (

@@ -5,6 +5,7 @@ import Body from "../body/Body";
 import Header from "./Header";
 import { useMediaQuery } from "react-responsive";
 import Paginator from "./Paginator";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const MainContainer = styled.div`
   display: flex;
@@ -15,6 +16,8 @@ const MainContainer = styled.div`
 `;
 
 const Main = () => {
+  const { user, isLoading, getAccessTokenSilently } = useAuth0();
+
   let { page } = useParams();
   if (page === undefined) {
     page = 1;
@@ -24,7 +27,9 @@ const Main = () => {
   let offset = (page - 1) * DEFAULT_LIMIT;
 
   const [apodData, setApodData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
+  const [accessToken, setAccessToken] = useState(null);
+
   const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
 
   const isDesktop = useMediaQuery({ query: "(min-width: 1224px)" });
@@ -33,31 +38,41 @@ const Main = () => {
   localStorage.setItem("postId", null);
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsFetching(true);
     fetch(`${serverEndpointBase}/apod?offset=${offset}&limit=${DEFAULT_LIMIT}`)
       .then((response) => response.json())
       .then((apodData) =>
         apodData.sort((a, b) => a.date.localeCompare(b.bdate))
       )
       .then((apodData) => setApodData(apodData))
-      .then(() => setIsLoading(false));
-  }, [serverEndpointBase, offset]);
+      .then(() => setIsFetching(false));
 
-  if (isLoading) {
+    getAccessTokenSilently().then((accessToken) => setAccessToken(accessToken));
+  }, [serverEndpointBase, offset, getAccessTokenSilently]);
+
+  if (isFetching) {
     return <div>Loading...</div>;
   } else {
     return (
       <Fragment>
         {isDesktop && (
           <MainContainer>
-            <Header />
+            <Header
+              user={user}
+              accessToken={accessToken}
+              isLoading={isLoading}
+            />
             <Body apodData={apodData} />
             <Paginator page={page} />
           </MainContainer>
         )}
         {isMobile && (
           <Fragment>
-            <Header />
+            <Header
+              user={user}
+              accessToken={accessToken}
+              isLoading={isLoading}
+            />
             <Body apodData={apodData} />
             <Paginator page={page} />
           </Fragment>
