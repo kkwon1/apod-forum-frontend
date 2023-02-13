@@ -47,7 +47,10 @@ const Main = () => {
       .then((apodData) => setApodData(apodData))
       .then(() => setIsFetching(false));
 
-    getAccessTokenSilently().then((accessToken) => setAccessToken(accessToken));
+    getAccessTokenSilently().then((accessToken) => {
+      setAccessToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
+    });
   }, [serverEndpointBase, offset, getAccessTokenSilently]);
 
   if (isFetching) {

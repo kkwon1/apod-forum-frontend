@@ -25,26 +25,46 @@ const UpvoteIcon = styled(Icon)`
   }
 `;
 
-const Upvote = () => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+//TODO: Implement the following functionality
+// Keep upvote highlighted if user has already upvoted
+// Remove upvote if highlighted is clicked
+const Upvote = (props) => {
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
+
+  const upvote = () => {
+    if (isAuthenticated) {
+      let accessToken = localStorage.getItem("accessToken");
+
+      if (accessToken != null && user != null) {
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            postId: props.apod.date,
+            userSub: user.sub,
+          }),
+        };
+
+        fetch(serverEndpointBase + "/post/upvote", requestOptions)
+          .then((response) => response.json())
+          .then((response) => console.log(response));
+      } else {
+        loginWithRedirect();
+      }
+    } else {
+      loginWithRedirect();
+    }
+  };
+
   return (
     <UpvoteContainer>
-      <UpvoteIcon
-        onClick={() => upvote(isAuthenticated, loginWithRedirect)}
-        path={mdiTriangle}
-        size={0.8}
-      />
-      <UpvoteCountContainer>0</UpvoteCountContainer>
+      <UpvoteIcon onClick={() => upvote()} path={mdiTriangle} size={0.8} />
+      <UpvoteCountContainer>{props.apod.upvoteCount}</UpvoteCountContainer>
     </UpvoteContainer>
   );
 };
-
-const upvote = (isAuthenticated, loginWithRedirect) => {
-  if (isAuthenticated) {
-    // TODO: Upvote
-  } else {
-    loginWithRedirect();
-  }
-};
-
 export default Upvote;

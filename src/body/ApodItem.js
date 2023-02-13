@@ -76,7 +76,7 @@ const ApodItem = (props) => {
     <Fragment>
       {isDesktop && (
         <ApodItemContainer>
-          <Upvote />
+          <Upvote apod={props.apod} />
           <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
           <ContentContainer>
             <TitleContainer
@@ -106,7 +106,7 @@ const ApodItem = (props) => {
       )}
       {isMobile && (
         <ApodItemContainer>
-          <Upvote />
+          <Upvote apod={props.apod} />
           <ThumbnailContainer>{thumbnail}</ThumbnailContainer>
           <ContentContainer>
             <MobileTitleContainer

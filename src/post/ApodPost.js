@@ -64,13 +64,13 @@ const ApodPost = () => {
     fetch(`${serverEndpointBase}/post?post_id=${postId}`)
       .then((response) => response.json())
       .then((data) => setApodPost(data));
-    getAccessTokenSilently().then((accessToken) => setAccessToken(accessToken));
+    getAccessTokenSilently().then((accessToken) => {
+      setAccessToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
+    });
   }, [postId, serverEndpointBase, getAccessTokenSilently]);
 
   if (apodPost) {
-    console.log(user);
-    console.log(isAuthenticated);
-    console.log(accessToken);
     return (
       <Fragment>
         {isDesktop && (
