@@ -50,8 +50,27 @@ const Main = () => {
     getAccessTokenSilently().then((accessToken) => {
       setAccessToken(accessToken);
       localStorage.setItem("accessToken", accessToken);
+
+      if (user != null) {
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + accessToken,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userSub: user.sub,
+          }),
+        };
+
+        fetch(serverEndpointBase + "/user", requestOptions)
+          .then((response) => response.json())
+          .then((user) =>
+            localStorage.setItem("userUpvotes", user.upvotedPostIds)
+          );
+      }
     });
-  }, [serverEndpointBase, offset, getAccessTokenSilently]);
+  }, [serverEndpointBase, offset, getAccessTokenSilently, user]);
 
   if (isFetching) {
     return <div>Loading...</div>;
