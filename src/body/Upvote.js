@@ -92,7 +92,7 @@ const Upvote = (props) => {
         path={mdiTriangle}
         size={0.8}
       />
-      <UpvoteCountContainer>{props.apod.likeCount}</UpvoteCountContainer>
+      <UpvoteCountContainer>{props.apod.upvoteCount}</UpvoteCountContainer>
     </UpvoteContainer>
   );
 };
