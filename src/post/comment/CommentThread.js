@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import CommentTree from "./CommentTree";
 
 const CommentThreadContainer = styled.div`
   padding-top: 25px;
@@ -7,11 +8,17 @@ const CommentThreadContainer = styled.div`
 `;
 
 const CommentThread = (props) => {
-  const topLevelComments = props.comments.children.map((comment) => (
-    <li key={comment.commentId}>{comment.comment}</li>
+  const topLevelComments = props.comments.map((comment) => (
+    <CommentTree
+      key={comment.commentId}
+      comment={comment.comment}
+    ></CommentTree>
   ));
 
   return <CommentThreadContainer>{topLevelComments}</CommentThreadContainer>;
 };
+
+// For each comment, render the entire tree from root node
+// Loop over each comment
 
 export default CommentThread;

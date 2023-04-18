@@ -6,7 +6,7 @@ import ApodItem from "../body/ApodItem";
 import Divider from "@mui/material/Divider";
 import { useMediaQuery } from "react-responsive";
 import { useAuth0 } from "@auth0/auth0-react";
-import AddComment from "./AddComment";
+import AddComment from "./comment/AddComment";
 import ImageSection from "./Image";
 
 const ApodViewContainer = styled.div`

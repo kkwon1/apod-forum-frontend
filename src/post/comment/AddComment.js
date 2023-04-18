@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import styled from "styled-components";
+import CommentThread from "./CommentThread";
 
 const CommentsContainer = styled.div`
   display: flex;
@@ -28,6 +29,7 @@ const AddComment = (props) => {
   const addComment = () => {
     const serverEndpointBase = process.env.REACT_APP_APOD_BASE_ENDPOINT;
     let commentText = document.getElementById("commentText").value;
+    document.getElementById("commentText").value = "";
 
     const requestOptions = {
       method: "POST",
@@ -56,7 +58,9 @@ const AddComment = (props) => {
         <CommentsContainer>
           <CommentText id="commentText"></CommentText>
           <AddCommentButton onClick={addComment}>Add Comment</AddCommentButton>
-          {JSON.stringify(comments)}
+          <CommentThread comments={comments} />
+          {/* <Test comments={comments}></Test> */}
+          {/* {JSON.stringify(comments)} */}
         </CommentsContainer>
       ) : (
         <CommentsContainer>
@@ -67,7 +71,6 @@ const AddComment = (props) => {
             disabled
             placeholder="You must be logged in to leave a comment."
           ></CommentText>
-          {JSON.stringify(comments)}
         </CommentsContainer>
       )}
     </Fragment>
