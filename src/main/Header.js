@@ -15,6 +15,14 @@ const HeaderContainer = styled(Typography)`
   font-family: "Poppins", sans-serif;
 `;
 
+const OtherContainer = styled(Typography)`
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: "Poppins", sans-serif;
+`;
+
 const MainContainer = styled.div`
   font-size: 18px;
   font-weight: bold;
@@ -54,7 +62,12 @@ const Header = (props) => {
               <MainContainer onClick={() => navigate("/")}>
                 <div style={{ cursor: "pointer" }}>APOD Forum</div>
               </MainContainer>
-              Popular | Comments | Search | Random
+              {/* <OtherContainer>Popular</OtherContainer>
+              <OtherContainer>Comments</OtherContainer> */}
+              <OtherContainer onClick={() => navigate("/search")}>
+                <div style={{ cursor: "pointer" }}>Search</div>
+              </OtherContainer>
+              {/* <OtherContainer>Random</OtherContainer> */}
             </NavigationContainer>
             {props.accessToken != null ? (
               <AuthContainer>
@@ -92,7 +105,9 @@ const Header = (props) => {
           <MainContainer onClick={() => navigate("/")}>
             <div style={{ cursor: "pointer" }}>APOD Forum</div>
           </MainContainer>
-          Popular | Comments | Search | Random
+          <OtherContainer onClick={() => navigate("/search")}>
+            <div style={{ cursor: "pointer" }}>Search</div>
+          </OtherContainer>
         </NavigationContainer>
       </HeaderContainer>
     );

@@ -7,6 +7,7 @@ import ApodPost from "./post/ApodPost";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "@auth0/auth0-react";
 import CallbackRoute from "./callback/CallbackRoute";
+import SearchPage from "./search/SearchPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +23,7 @@ root.render(
           <Route path="/page/:page" element={<Main />} />
           <Route path="post" element={<ApodPost />} />
           <Route path="/callback" element={<CallbackRoute />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
