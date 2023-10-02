@@ -39,7 +39,7 @@ const Main = () => {
 
   useEffect(() => {
     setIsFetching(true);
-    fetch(`${serverEndpointBase}/apod?offset=${offset}&limit=${DEFAULT_LIMIT}`)
+    fetch(`${serverEndpointBase}/apods?offset=${offset}&limit=${DEFAULT_LIMIT}`)
       .then((response) => response.json())
       .then((apodData) =>
         apodData.sort((a, b) => a.date.localeCompare(b.bdate))

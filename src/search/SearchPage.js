@@ -55,7 +55,7 @@ const SearchPage = () => {
     });
 
     const searchApod = (searchText) => {
-      fetch(serverEndpointBase + `/apod?search=${searchText}`)
+      fetch(serverEndpointBase + `/apods/search?searchString=${searchText}`)
         .then((response) => response.json())
         .then((apodList) => {
           setApodData(apodList);

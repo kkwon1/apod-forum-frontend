@@ -61,7 +61,7 @@ const ApodPost = () => {
   localStorage.setItem("postId", postId);
 
   useEffect(() => {
-    fetch(`${serverEndpointBase}/post?post_id=${postId}`)
+    fetch(`${serverEndpointBase}/posts/${postId}`)
       .then((response) => response.json())
       .then((data) => setApodPost(data));
     getAccessTokenSilently().then((accessToken) => {
