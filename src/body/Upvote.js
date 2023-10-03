@@ -59,9 +59,7 @@ const Upvote = (props) => {
             }),
           };
 
-          fetch(serverEndpointBase + "/post/upvote", requestOptions)
-            .then((response) => response.json())
-            .then((response) => console.log(response));
+          fetch(serverEndpointBase + "/posts/upvote", requestOptions);
         } else {
           loginWithRedirect();
         }

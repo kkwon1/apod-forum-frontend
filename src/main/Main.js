@@ -53,17 +53,14 @@ const Main = () => {
 
       if (user != null) {
         const requestOptions = {
-          method: "POST",
+          method: "GET",
           headers: {
             Authorization: "Bearer " + accessToken,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            userSub: user.sub,
-          }),
         };
 
-        fetch(serverEndpointBase + "/user", requestOptions)
+        fetch(serverEndpointBase + `/users/${user.sub}`, requestOptions)
           .then((response) => response.json())
           .then((user) =>
             localStorage.setItem("userUpvotes", user.upvotedPostIds)

@@ -8,14 +8,18 @@ const CommentThreadContainer = styled.div`
 `;
 
 const CommentThread = (props) => {
-  const topLevelComments = props.comments.map((comment) => (
-    <CommentTree
-      key={comment.commentId}
-      comment={comment.comment}
-    ></CommentTree>
-  ));
+  if (props.comments) {
+    const topLevelComments = props.comments.map((comment) => (
+      <CommentTree
+        key={comment.commentId}
+        comment={comment.comment}
+      ></CommentTree>
+    ));
 
-  return <CommentThreadContainer>{topLevelComments}</CommentThreadContainer>;
+    return <CommentThreadContainer>{topLevelComments}</CommentThreadContainer>;
+  } else {
+    <div></div>;
+  }
 };
 
 // For each comment, render the entire tree from root node
