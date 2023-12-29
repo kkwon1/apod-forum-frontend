@@ -25,7 +25,7 @@ const DescriptionContainer = styled.div`
   line-height: 1.5;
   color: #626262;
 
-  padding-bottom: 30px;
+  padding-bottom: 60px;
 `;
 
 const MobileApodViewContainer = styled.div`
@@ -42,6 +42,21 @@ const MobileDescriptionContainer = styled.div`
   color: #626262;
   text-align: left;
   padding: 15px;
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  padding-top: 10px;
+`;
+
+const Tag = styled.div`
+  display: inline-block;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 3px;
+  background-color: #f0f0f0;
 `;
 
 const ApodPost = () => {
@@ -82,17 +97,27 @@ const ApodPost = () => {
             />
             <ApodItem apod={apodPost.nasaApod} />
             <ImageSection hdurl={apodPost.nasaApod.hdurl} />
+            <TagContainer>
+              {apodPost.nasaApod.tags.map((tag, index) => {
+                const capitalizedTag = tag
+                  .split(" ")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ");
+                return <Tag key={index}>#{capitalizedTag}</Tag>;
+              })}
+            </TagContainer>
             <DescriptionContainer>
               {apodPost.nasaApod.explanation}
             </DescriptionContainer>
-            <Divider variant="middle" />
-            <AddComment
+            {/* <Divider variant="middle" /> */}
+            {/* TODO add comment once ready */}
+            {/* <AddComment
               isAuthenticated={isAuthenticated}
               comments={apodPost.comments}
               accessToken={accessToken}
               user={user}
               date={postId}
-            />
+            /> */}
           </ApodViewContainer>
         )}
         {isMobile && (
