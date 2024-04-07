@@ -9,14 +9,18 @@ const ItemContainer = styled.div`
 `;
 
 const Body = (props) => {
-  const apodItems = props.apodData.map((apod) => (
-    <li key={apod.date}>
-      <ApodItem apod={apod} showThumbnail={true}>
-        {apod.title} - {apod.date}
-      </ApodItem>
-    </li>
-  ));
-  return <ItemContainer>{apodItems}</ItemContainer>;
+  if (props.apodData == null) {
+    return <div></div>;
+  } else {
+    const apodItems = props.apodData.map((apod) => (
+      <li key={apod.date}>
+        <ApodItem apod={apod} showThumbnail={true}>
+          {apod.title} - {apod.date}
+        </ApodItem>
+      </li>
+    ));
+    return <ItemContainer>{apodItems}</ItemContainer>;
+  }
 };
 
 export default Body;

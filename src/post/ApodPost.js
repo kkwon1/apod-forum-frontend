@@ -3,10 +3,8 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../main/Header";
 import ApodItem from "../body/ApodItem";
-import Divider from "@mui/material/Divider";
 import { useMediaQuery } from "react-responsive";
 import { useAuth0 } from "@auth0/auth0-react";
-import AddComment from "./comment/AddComment";
 import ImageSection from "./Image";
 
 const ApodViewContainer = styled.div`
@@ -55,8 +53,8 @@ const Tag = styled.div`
   display: inline-block;
   margin: 5px;
   padding: 5px;
-  border-radius: 3px;
-  background-color: #f0f0f0;
+  border-radius: 5px;
+  background-color: #e0e0dc;
 `;
 
 const ApodPost = () => {
